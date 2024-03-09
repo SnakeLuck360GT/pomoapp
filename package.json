@@ -1,0 +1,15 @@
+{
+  "name": "pomoapp",
+  "version": "1.0.0",
+  "description": "aesthetic pomodoro timer",
+  "main": "index.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "electron": "^29.1.0",
+    "request": "^2.88.2"
+  }
+}

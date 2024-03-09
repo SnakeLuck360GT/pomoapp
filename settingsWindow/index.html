@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Settings</title>
+</head>
+<body>
+    <div class="draggable-surface"></div>
+
+    <div class="exit-button" onclick="exit()"><img src="../resources/x-mark-16.png"></div>
+    <div class="minimise-button" onclick="minimise()"><img src="../resources/minus-7-16.png"></div>
+
+    <div class="options-page">
+        <div class="Settings-Text">
+            <p>Settings</p>
+        </div>
+        <div class="minimize-on-close-toggle-container">
+            <p>Minimize to Tray on Close</p>
+            <div class="minimize-on-close-toggle-button">
+                <div class="circle-button-minimize-on-close" onclick="minimiseonclose()" id="circle-button-minimize-on-close"></div>
+            </div>
+        </div>
+
+        <div class="minimize-to-tray-toggle-container">
+            <p>Minimize to Tray</p>
+            <div class="minimize-to-tray-toggle-button">
+                <div class="circle-button-minimize-to-tray" onclick="minimizetotray()" id="circle-button-minimize-to-tray"></div>
+            </div>
+        </div>
+        
+        <div class="Spotify-Text">
+            <p>Spotify Settings</p>
+        </div>
+        <div class="spotify-sync-container">
+            <p>Sync Spotify</p>
+            <div class="spotify-sync-button" onclick="spotifySync()" id="Sync-Text">Sync</div>
+        </div>
+        <div class="spotify-toggle-container">
+            <p>Toggle Spotify</p>
+            <div class="spotify-toggle-button">
+                <div class="circle-button" onclick="toggleFill(this)" id="circle-button"></div>
+            </div>
+        </div>
+        
+    </div>
+
+    <div class="bottom-bar">
+        <div class="timer-settings" onclick="openTimerSettings()">
+            <img src="../resources/timer-16.png">
+            <span class="timer-tooltip">Timer Settings</span>
+        </div>
+        <div class="options-settings" onclick="openOptionsSettings()">
+            <img src="../resources/cog-16.png">
+            <span class="options-tooltip">Options</span>
+        </div>
+        <div class="theme-settings" onclick="openThemeSettings()">
+            <img src="../resources/brush-2-16.png">
+            <span class="theme-tooltip">Change Theme</span>
+        </div>
+        <div class="info" onclick="openInformation()">
+            <img src="../resources/info-2-16.png">
+            <span class="info-tooltip">Information</span>
+        </div>
+    </div>
+</body>
+<script src="script.js"></script>
+</html>

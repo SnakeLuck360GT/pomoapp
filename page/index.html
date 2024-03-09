@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cabin:ital,wght@0,400..700;1,400..700&family=Madimi+One&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <title>Pomodoro Timer</title>
+</head>
+<body>
+    <div class="draggable-surface"></div>
+
+    <div class="exit-button" onclick="exit()"><img src="../resources/x-mark-16.png"></div>
+    <div class="minimise-button" onclick="minimise()"><img src="../resources/minus-7-16.png"></div>
+
+
+    <div class="break-container">
+        <div class="work">
+            <label id="worklabel">pomodoro</label>
+        </div>
+        <div class="short-break">
+            <label id="short-break-label">short break</label>
+        </div>
+        <div class="long-break">
+            <label id="long-break-label">long break</label>
+        </div>
+    </div>
+
+
+    <div class="timer-container">
+        <div class="timer">
+            <div class="time-display" id="time">25:00</div>
+        </div>
+    </div>
+
+    <div class="controls-container">
+        <div class="controls">
+            <button class = "pauseTimer" onclick="pauseTimer()" id="pauseTimer"><img src="../resources/play-16.png"></button>
+            <button class = "skipTimer" onclick="skipTimer()" id="skipTimer"><img src="../resources/media-step-forward-16.png"></button>
+            <button class = "settings" onclick="settings()" id="settings"><img src="../resources/cog-16.png"></button>
+        </div>
+    </div>
+
+    <div class="spotify-container">
+        <div class="previous-song" onclick="previousSong()" id="previous-song"><img src="../resources/media-skip-backward-16.png"></div>
+        <div class="spotify-album" id="spotify-album"><img src="https://i.scdn.co/image/ab67616d0000b27344ce5e5926e0d277b70f0bd5"></div>
+        <div class="spotify-title-and-artist" id="spotify-title-and-artist">wish u were gone - slone</div>
+        <div class="next-song" onclick="nextSong()" id="next-song"><img src="../resources/media-skip-forward-16.png"></div>
+    </div>
+
+    <div class="progress-container">
+        <div class="round-number" id="round-number">1/4 (0)</div>
+    </div>
+
+    <div class="reset-button" onclick="resetTimer()">Reset</div>
+
+    <script src="script.js"></script>
+</body>
+</html>

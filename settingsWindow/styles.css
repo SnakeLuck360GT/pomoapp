@@ -1,0 +1,326 @@
+body {
+    margin: 0;
+    background-image: url("../resources/settings_background.jpg");
+}
+
+.bottom-bar {
+    position: fixed;
+    background-color: #cfb5f6;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 40px; /* Adjust the height as needed */
+    border-width: 1px 0 0 0;
+    border-style: solid;
+    border-color: #d4bdf7;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.exit-button{
+    background-color: transparent;
+    width: auto;
+    height: auto;
+    border-radius: 20px;
+    padding: 4px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 20px; 
+    position: fixed;
+    top: -10px;
+    right: 10px;
+    opacity: 50%; 
+}
+
+.minimise-button{
+background-color: transparent;
+width: auto;
+height: auto;
+border-radius: 20px;
+padding: 4px;
+display: flex;
+justify-content: space-around;
+align-items: center;
+margin-top: 20px; 
+position: fixed;
+top: -10px;
+right: 40px;
+opacity: 50%; 
+}
+
+@font-face { font-family: cabin-regular; 
+    src: url('../resources/Cabin-SemiBold.ttf'); } 
+    
+@font-face { font-family: MadimiOne-regular; 
+    src: url('../resources/MadimiOne-Regular.ttf'); } 
+
+@font-face { font-family: cabin-normal; 
+    src: url('../resources/Cabin-Regular.ttf'); } 
+
+:not(input):not(textarea),
+:not(input):not(textarea)::after,
+:not(input):not(textarea)::before {
+    -webkit-user-select: none;
+    user-select: none;
+    cursor: default;
+}
+input, button, textarea, :focus {
+    outline: none; 
+}
+
+.draggable-surface {
+    -webkit-app-region: drag;
+    width: 80%;
+    height: 10%; /* Adjust the height to control the thickness of the line */
+    background-color: transparent;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.exit-button:hover, .minimise-button:hover{
+    background-color: rgba(255, 255, 255, 0.5); /* Adjust the transparency on hover */
+}
+
+.bottom-bar img {
+    width: 16px; /* Adjust the width of the images as needed */
+    height: 16px; /* Adjust the height of the images as needed */
+    margin: 0; /* Remove default margins on images */
+}
+
+.bottom-bar > div {
+    flex: 4; /* Equal distribution of space among child elements */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0; /* Adjust the margin for equal spacing */
+    transition: background-color 0.3s ease; /* Smooth transition effect */
+    height: 100%;
+}
+
+.bottom-bar > div:hover {
+    background-color: rgba(255, 255, 255, 0.5); /* Adjust the transparency on hover */
+}
+
+.bottom-bar .timer-settings {
+    position: relative;
+}
+
+.bottom-bar .timer-settings .timer-tooltip {
+    visibility: hidden;
+    width: 35px;
+    height: 30px;
+    font-size: 10px;
+    font-family: cabin-regular;
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+    /* Position the tooltip text above the timer-settings div */
+    position: absolute;
+    bottom: 100%; /* Position the tooltip above the element */
+    left: 50%; /* Center the tooltip horizontally within the parent (timer-settings) */
+    transform: translateX(-50%); /* Adjust for centering */
+    opacity: 0; /* Make the tooltip transparent initially */
+    transition: opacity 0.3s ease; /* Add a transition effect for opacity */
+}
+
+.bottom-bar .timer-settings:hover .timer-tooltip {
+    visibility: visible;
+    opacity: 1;
+}
+
+.bottom-bar .options-settings {
+    position: relative;
+}
+
+.bottom-bar .options-settings .options-tooltip {
+    visibility: hidden;
+    width: 35px;
+    height: 15px;
+    font-size: 10px;
+    font-family: cabin-regular;
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+    /* Position the tooltip text above the timer-settings div */
+    position: absolute;
+    bottom: 100%; /* Position the tooltip above the element */
+    left: 50%; /* Center the tooltip horizontally within the parent (timer-settings) */
+    transform: translateX(-50%); /* Adjust for centering */
+    opacity: 0; /* Make the tooltip transparent initially */
+    transition: opacity 0.3s ease; /* Add a transition effect for opacity */
+}
+
+.bottom-bar .options-settings:hover .options-tooltip {
+    visibility: visible;
+    opacity: 1;
+}
+
+.bottom-bar .theme-settings:hover .theme-tooltip {
+    visibility: visible;
+    opacity: 1;
+}
+
+.bottom-bar .theme-settings {
+    position: relative;
+}
+
+.bottom-bar .theme-settings .theme-tooltip {
+    visibility: hidden;
+    width: 35px;
+    height: 29px;
+    font-size: 10px;
+    font-family: cabin-regular;
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+    /* Position the tooltip text above the timer-settings div */
+    position: absolute;
+    bottom: 100%; /* Position the tooltip above the element */
+    left: 50%; /* Center the tooltip horizontally within the parent (timer-settings) */
+    transform: translateX(-50%); /* Adjust for centering */
+    opacity: 0; /* Make the tooltip transparent initially */
+    transition: opacity 0.3s ease; /* Add a transition effect for opacity */
+}
+
+.bottom-bar .theme-settings:hover .theme-tooltip {
+    visibility: visible;
+    opacity: 1;
+}
+
+.bottom-bar .info {
+    position: relative;
+}
+
+.bottom-bar .info .info-tooltip {
+    visibility: hidden;
+    width: 50px;
+    height: 15px;
+    font-size: 10px;
+    font-family: cabin-regular;
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+    /* Position the tooltip text above the timer-settings div */
+    position: absolute;
+    bottom: 100%; /* Position the tooltip above the element */
+    left: 50%; /* Center the tooltip horizontally within the parent (timer-settings) */
+    transform: translateX(-50%); /* Adjust for centering */
+    opacity: 0; /* Make the tooltip transparent initially */
+    transition: opacity 0.3s ease; /* Add a transition effect for opacity */
+}
+
+.bottom-bar .info:hover .info-tooltip {
+    visibility: visible;
+    opacity: 1;
+}
+
+.options-page {
+    align-items: center;
+    position: absolute;
+    top: 6%; /* Adjust the top position as needed */
+    bottom: 40px; /* Set to the height of .bottom-bar to prevent it from overlapping */
+    left: 0;
+    right: 0;
+    overflow-y: auto; /* Enable vertical scrolling */
+    color: white;
+    font-family: cabin-normal;
+    font-size: medium;
+    padding: 10px; /* Optional: Add padding for content */
+        
+    
+    /* WebKit-based browsers (Chrome, Safari, Edge) */
+    &::-webkit-scrollbar {
+        width: 10px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: #cfb5f6; /* Color of the thumb */
+        border-radius: 7.5px; /* Roundness of the thumb */
+    }
+
+    &::-webkit-scrollbar-track {
+        background-color: transparent; /* Color of the track */
+        border-radius: 10px; /* Roundness of the track */
+    }
+}
+
+.spotify-sync-container,
+.spotify-toggle-container ,
+.minimize-on-close-toggle-container,
+.minimize-to-tray-toggle-container{
+    margin-bottom: 10px;
+    padding: 1px;
+    border-radius: 10px;
+    background-color: #caadf5;
+    display: flex; /* Enable flex layout */
+    align-items: center;
+    border-style: solid;
+    border-color: #fff;
+    border-width: 2px;
+    justify-content: space-between; /* Ensure space between items */
+}
+
+/* Adjust the padding-left for the text-containing element */
+.spotify-sync-container p,
+.spotify-toggle-container p, .minimize-on-close-toggle-container p, .minimize-to-tray-toggle-container p{
+    padding-left: 10px; /* Adjust the padding as needed */
+}
+
+.spotify-sync-button{
+    text-align: center;
+    align-items: center;
+    right: 17.5px;
+    position: relative;
+    height: 20px;
+    width: 75px;
+    border-color: white;
+    border-style: solid;
+    border-width: 2px;
+    border-radius: 5px;
+    transition: opacity 0.3s ease; /* Add a transition effect for opacity */
+}
+
+
+.spotify-sync-button:hover{
+    background-color: rgba(255, 255, 255, 0.5); /* Adjust the transparency on hover */
+}
+
+.circle-button, .circle-button-minimize-on-close, .circle-button-minimize-to-tray{
+    width: 20px;
+    height: 20px;
+    background-color: transparent;
+    border: 2px solid #fff;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    text-decoration: none;
+    margin-right: 15px;
+  }
+
+  /* Styles for the filled state */
+  .circle-button.clicked, .circle-button-minimize-on-close.clicked, .circle-button-minimize-to-tray.clicked {
+    background-color: #fff;
+    color: #000; /* Change text color when filled */
+  }
+
+  .Spotify-Text, .Settings-Text{
+    top: 0;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 5px;
+
+  }
+
+
