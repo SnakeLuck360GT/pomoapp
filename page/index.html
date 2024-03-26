@@ -10,6 +10,10 @@
     <title>Pomodoro Timer</title>
 </head>
 <body>
+
+    <audio id="workAudio" src="../resources/work.wav"></audio>
+    <audio id="shortBreakAudio" src="../resources/shortbreak.wav"></audio>
+    <audio id="longBreakAudio" src="../resources/longbreak.mp3"></audio>
     <div class="draggable-surface"></div>
 
     <div class="exit-button" onclick="exit()"><img src="../resources/x-mark-16.png"></div>
@@ -17,13 +21,13 @@
 
 
     <div class="break-container">
-        <div class="work">
+        <div class="work" id="work">
             <label id="worklabel">pomodoro</label>
         </div>
-        <div class="short-break">
+        <div class="short-break" id="short-break">
             <label id="short-break-label">short break</label>
         </div>
-        <div class="long-break">
+        <div class="long-break" id="long-break">
             <label id="long-break-label">long break</label>
         </div>
     </div>
@@ -37,7 +41,7 @@
 
     <div class="controls-container">
         <div class="controls">
-            <button class = "pauseTimer" onclick="pauseTimer()" id="pauseTimer"><img src="../resources/play-16.png"></button>
+            <button class = "pauseTimer" onclick="toggleTimer()" id="pauseTimer"><img src="../resources/play-16.png"></button>
             <button class = "skipTimer" onclick="skipTimer()" id="skipTimer"><img src="../resources/media-step-forward-16.png"></button>
             <button class = "settings" onclick="settings()" id="settings"><img src="../resources/cog-16.png"></button>
         </div>

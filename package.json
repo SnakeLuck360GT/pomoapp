@@ -1,15 +1,32 @@
 {
   "name": "pomoapp",
+  "productName": "PomoApp",
+  "author": "David Xie",
   "version": "1.0.0",
   "description": "aesthetic pomodoro timer",
   "main": "index.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron index.js",
+    "package": "electron-builder"
   },
-  "author": "",
   "license": "ISC",
   "dependencies": {
-    "electron": "^29.1.0",
+    "discord-rpc": "^4.0.1",
     "request": "^2.88.2"
+  },
+  "devDependencies": {
+    "electron": "^29.1.0",
+    "electron-builder": "^24.13.3"
+  },
+  "build": {
+    "appId": "com.DavidXie.PomoApp",
+    "asarUnpack": [
+      "config/**/*",
+      "resources/**/*"
+    ],
+    "win": {
+      "target": "zip",
+      "icon": "resources/purple_sky_icon.png"
+    }
   }
 }

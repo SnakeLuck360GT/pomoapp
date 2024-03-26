@@ -1,9 +1,16 @@
 const path = require('path');
-const { app, BrowserWindow, ipcMain, Tray, Menu} = require('electron');
+const { app, BrowserWindow, ipcMain, Tray, Menu, Notification} = require('electron');
 const request = require('request');
 const { constrainedMemory, config } = require('process');
 const fs = require('fs');
+app.setPath ('userData', __dirname + "/config/");
+const UserDataPath = __dirname
 let mainWindow;
+
+if (process.platform === 'win32')
+{
+    app.setAppUserModelId("PomoApp")
+}
 
 function createMainWindow() {
     mainWindow = new BrowserWindow({
@@ -61,7 +68,7 @@ app.whenReady().then(() => {
 });
 
 ipcMain.on("closeWindow", (event, data) => {
-  const configPath = './config.json';
+  const configPath = path.join(UserDataPath, 'config','config.json');
   const fs = require('fs');
   const config = JSON.parse(fs.readFileSync(configPath, 'utf-8'));
 
@@ -76,7 +83,7 @@ ipcMain.on("closeWindow", (event, data) => {
 });
 
 ipcMain.on("minimiseWindow", (event, data) => {
-  const configPath = './config.json';
+  const configPath = path.join(UserDataPath, 'config','config.json');
   const fs = require('fs');
   const config = JSON.parse(fs.readFileSync(configPath, 'utf-8'));
   const isMinimizeTray = config.mainSettings.minimize_to_tray;
@@ -92,7 +99,13 @@ ipcMain.on("openSettings", (event, data) => {
     createSettingsWindow();
   }
   else if(settingsWindow){
-    settingsWindow.close();
+    if(settingsWindow.isVisible()){
+      settingsWindow.hide();
+    }
+    else{
+      settingsWindow.show();
+    }
+
   }
 });
 
@@ -108,8 +121,14 @@ ipcMain.on("minimiseSettings", (event, data) => {
   }
 });
 
+
+ipcMain.on('get-user-data-path', (event) => {
+  const userDataPath = app.getPath('userData');
+    event.sender.send('user-data-path', userDataPath)
+});
+
 ipcMain.on("spotifyEnabled", (event, data) => {
-  const configPath = './config.json';
+  const configPath = path.join(UserDataPath, 'config','config.json');
     const fs = require('fs');
     const config = JSON.parse(fs.readFileSync(configPath, 'utf-8'));
 
@@ -119,7 +138,7 @@ ipcMain.on("spotifyEnabled", (event, data) => {
 });
 
 ipcMain.on("minimiseOnCloseEnabled", (event, data) => {
-  const configPath = './config.json';
+  const configPath = path.join(UserDataPath, 'config','config.json');
     const fs = require('fs');
     const config = JSON.parse(fs.readFileSync(configPath, 'utf-8'));
 
@@ -130,7 +149,7 @@ ipcMain.on("minimiseOnCloseEnabled", (event, data) => {
 
 ipcMain.on("minimizeEnabled", (event, data) => {
   console.log(data)
-  const configPath = './config.json';
+  const configPath = path.join(UserDataPath, 'config','config.json');
     const fs = require('fs');
     const config = JSON.parse(fs.readFileSync(configPath, 'utf-8'));
 
@@ -139,12 +158,46 @@ ipcMain.on("minimizeEnabled", (event, data) => {
 
 });
 
+ipcMain.on("shortBreakNotification", (event, data) => {
+  const configPath = path.join(UserDataPath, 'config','config.json');
+  const fs = require('fs');
+  const config = JSON.parse(fs.readFileSync(configPath, 'utf-8'));
+  const shortBreakMins = config.timerSettings.shortBreakDuration;
+  new Notification({ title: "Focus Round Complete", body: `Begin a ${shortBreakMins} minute short break.`}).show()
+});
+
+ipcMain.on("shortBreakEndNotification", (event, data) => {
+  const configPath = path.join(UserDataPath, 'config','config.json');
+  const fs = require('fs');
+  const config = JSON.parse(fs.readFileSync(configPath, 'utf-8'));
+  const workMins = config.timerSettings.timerDuration;
+  new Notification({ title: "Short Break Complete", body: `Start focusing for ${workMins} minutes.`}).show()
+});
+
+ipcMain.on("longBreakNotification", (event, data) => {
+  const configPath = path.join(UserDataPath, 'config','config.json');
+  const fs = require('fs');
+  const config = JSON.parse(fs.readFileSync(configPath, 'utf-8'));
+  const longBreakMins = config.timerSettings.longBreakDuration;
+  new Notification({ title: "Focus Round Complete", body: `Begin a ${longBreakMins} minute long break.`}).show()
+});
+
+ipcMain.on("longBreakEndNotification", (event, data) => {
+  const configPath = path.join(UserDataPath, 'config','config.json');
+  const fs = require('fs');
+  const config = JSON.parse(fs.readFileSync(configPath, 'utf-8'));
+  const workMins = config.timerSettings.timerDuration;
+  new Notification({ title: "Long Break Complete", body: `Start focusing for ${workMins} minutes.`}).show()
+});
+
+
+
 
 let currentTimestamp = 0
 
 function getCurrentTime(){
     currentTimestamp = Math.floor(Date.now() / 1000);
-    const configPath = './config.json';
+    const configPath = path.join(UserDataPath, 'config','config.json');
     const configfile = JSON.parse(fs.readFileSync(configPath, 'utf-8'));
 
     if(configfile.spotifyAuth.authCode == "" || !configfile.spotifyAuth.authCode) return;
@@ -169,10 +222,12 @@ ipcMain.on('authorize-spotify', (event, data) => {
       'app-remote-control',
   ];
 
+  console.log("im here1")
+
   const spotifyAuthUrl = `https://accounts.spotify.com/authorize?client_id=732d056b612e4f82bef5425f2566736a&response_type=code&redirect_uri=${encodeURIComponent('https://spotifycallback.netlify.app')}&scope=${encodeURIComponent(scopes.join(' '))}`;
 
   const fspromises = require('fs').promises;
-  const configPath = './config.json';
+  const configPath = path.join(UserDataPath, 'config','config.json');
   
   const fs = require('fs');
   const config = JSON.parse(fs.readFileSync(configPath, 'utf-8'));
@@ -186,7 +241,9 @@ ipcMain.on('authorize-spotify', (event, data) => {
   // initial auth code thingy
   const sendAuthCodeToServer = () => {
 
-    const configPath = './config.json';
+    console.log("im here3")
+
+    const configPath = path.join(UserDataPath, 'config','config.json');
     const fs = require('fs');
     const request = require('request');
     
@@ -213,7 +270,8 @@ ipcMain.on('authorize-spotify', (event, data) => {
           config.spotifyAuth.access_token = body.access_token;
           config.spotifyAuth.expiry_timestamp = expirationTime;
           config.spotifyAuth.refresh_token = body.refresh_token;
-  
+
+          console.log("im here2")
 
           fs.writeFileSync(configPath, JSON.stringify(config, null, 2), 'utf-8');
   
@@ -229,20 +287,21 @@ ipcMain.on('authorize-spotify', (event, data) => {
 
   
   authWindow.webContents.on('will-redirect', async (event, newUrl) => {
-      const { redirectURI } = JSON.parse(await fspromises.readFile(configPath)).spotifyAuth;
+      const { redirectURI } = JSON.parse(fs.readFileSync(configPath)).spotifyAuth;
   
       if (newUrl.startsWith(redirectURI)) {
           const urlParts = newUrl.split('?');
           const queryString = urlParts[1];
           const params = new URLSearchParams(queryString);
-  
+
+          console.log("4")
           const code = params.get('code');
   
           // Read the config file again to get the latest data
-          const config = JSON.parse(await fspromises.readFile(configPath));
+          const config = JSON.parse(fs.readFileSync(configPath));
           config.spotifyAuth.authCode = code;
   
-          await fspromises.writeFile(configPath, JSON.stringify(config, null, 2));
+          fs.writeFileSync(configPath, JSON.stringify(config, null, 2));
   
           // Send the code to your Electron main process
           mainWindow.webContents.send('spotify-auth-code', code);
@@ -262,7 +321,7 @@ ipcMain.on('authorize-spotify', (event, data) => {
 
 
   function refreshAccessToken(){
-    const configPath = './config.json';
+    const configPath = path.join(UserDataPath, 'config','config.json');
     const fs = require('fs');
     const request = require('request');
     
@@ -295,7 +354,7 @@ ipcMain.on('authorize-spotify', (event, data) => {
           const spotifyAuthUrl = `https://accounts.spotify.com/authorize?client_id=732d056b612e4f82bef5425f2566736a&response_type=code&redirect_uri=${encodeURIComponent('https://spotifycallback.netlify.app')}&scope=${encodeURIComponent(scopes.join(' '))}`;
         
           const fspromises = require('fs').promises;
-          const configPath = './config.json';
+          const configPath = path.join(UserDataPath, 'config','config.json');
           
           const fs = require('fs');
           const config = JSON.parse(fs.readFileSync(configPath, 'utf-8'));
@@ -308,7 +367,7 @@ ipcMain.on('authorize-spotify', (event, data) => {
           // initial auth code thingy
           const sendAuthCodeToServer = () => {
         
-            const configPath = './config.json';
+            const configPath = path.join(UserDataPath, 'config','config.json');
             const fs = require('fs');
             const request = require('request');
             
@@ -351,7 +410,7 @@ ipcMain.on('authorize-spotify', (event, data) => {
         
           
           authWindow.webContents.on('will-redirect', async (event, newUrl) => {
-              const { redirectURI } = JSON.parse(await fspromises.readFile(configPath)).spotifyAuth;
+              const { redirectURI } = JSON.parse(await fs.readFileSync(configPath)).spotifyAuth;
           
               if (newUrl.startsWith(redirectURI)) {
                   const urlParts = newUrl.split('?');
@@ -361,10 +420,10 @@ ipcMain.on('authorize-spotify', (event, data) => {
                   const code = params.get('code');
           
                   // Read the config file again to get the latest data
-                  const config = JSON.parse(await fspromises.readFile(configPath));
+                  const config = JSON.parse(await fs.readFileSync(configPath));
                   config.spotifyAuth.authCode = code;
           
-                  await fspromises.writeFile(configPath, JSON.stringify(config, null, 2));
+                  await fs.writeFileSync(configPath, JSON.stringify(config, null, 2));
           
                   // Send the code to your Electron main process
                   mainWindow.webContents.send('spotify-auth-code', code);
@@ -392,7 +451,7 @@ ipcMain.on('authorize-spotify', (event, data) => {
   }
 
   function getCurrentlyPlaying(){
-    const configPath = './config.json';
+    const configPath = path.join(UserDataPath, 'config','config.json');
     const fs = require('fs');
     const request = require('request');
     
@@ -436,7 +495,7 @@ function closeToTray(){
   if (settingsWindow){
     settingsWindow.hide()
   }
-  tray = new Tray( __dirname + './resources/purple_sky_icon.png');
+  tray = new Tray( __dirname + '/resources/purple_sky_icon.png');
  const contextMenu = Menu.buildFromTemplate([
         { label: "Quit", type: "normal", click: handleQuit },
     ]);
@@ -450,7 +509,7 @@ function closeToTray(){
 
 function minimiseToTray(){
   mainWindow.hide()
-  tray = new Tray( __dirname + './resources/purple_sky_icon.png');
+  tray = new Tray( __dirname + '/resources/purple_sky_icon.png');
  const contextMenu = Menu.buildFromTemplate([
         { label: "Quit", type: "normal", click: handleQuit },
     ]);
@@ -477,3 +536,44 @@ function restoreMainWindow() {
       mainWindow.show(); // If mainWindow exists, simply show it
   }
 }
+
+
+// Function to create a config.json file if it doesn't exist
+function createConfigFileIfNotExists() {
+  const configPath = path.join(UserDataPath, 'config','config.json');
+    if (!fs.existsSync(configPath)) {
+        const defaultConfig = {
+            spotifyAuth: {
+                redirectURI: "https://spotifycallback.netlify.app",
+                last_album_cover_url: '',
+                expiry_timestamp: 0,
+                last_song: '',
+                last_artist: '',
+                authCode: '',
+                access_token: '',
+                spotify_enabled: 'false' 
+            },
+            timerSettings: {
+                timerDuration: 25, 
+                shortBreakDuration: 5, 
+                longBreakDuration: 15, 
+                roundNumber: 4 
+            },
+            mainSettings: {
+              minimize_to_tray_on_close: "false",
+              minimize_to_tray: "false"
+            }
+           
+        };
+
+        fs.writeFileSync(configPath, JSON.stringify(defaultConfig, null, 4));
+        console.log('Created default config.json file.');
+    }
+}
+
+// Call the function when the app is ready
+app.whenReady().then(() => {
+    createConfigFileIfNotExists();
+});
+
+console.log('User Data Path:', app.getPath('userData'));

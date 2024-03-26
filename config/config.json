@@ -1,0 +1,19 @@
+{
+  "spotifyAuth": {
+    "redirectURI": "https://spotifycallback.netlify.app",
+    "expiry_timestamp": 0,
+    "authCode": "",
+    "access_token": "",
+    "spotify_enabled": "true"
+  },
+  "timerSettings": {
+    "timerDuration": 25,
+    "shortBreakDuration": 5,
+    "longBreakDuration": 15,
+    "roundNumber": 4
+  },
+  "mainSettings": {
+    "minimize_to_tray_on_close": "false",
+    "minimize_to_tray": "false"
+  }
+}
