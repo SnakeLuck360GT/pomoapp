@@ -1,6 +1,6 @@
 body {
     margin: 0;
-    background-image: url("../resources/settings_background.jpg");
+    background-color: #d9c5f8;
 }
 
 .bottom-bar {
@@ -233,6 +233,7 @@ input, button, textarea, :focus {
     font-family: cabin-normal;
     font-size: medium;
     padding: 10px; /* Optional: Add padding for content */
+    display: none;
         
     
     /* WebKit-based browsers (Chrome, Safari, Edge) */
@@ -314,7 +315,7 @@ input, button, textarea, :focus {
     color: #000; /* Change text color when filled */
   }
 
-  .Spotify-Text, .Settings-Text{
+  .Spotify-Text, .Settings-Text, .timer-settings-text, .pomodoro-text{
     top: 0;
     text-align: center;
     align-items: center;
@@ -324,3 +325,113 @@ input, button, textarea, :focus {
   }
 
 
+
+  .timer-settings-page{
+    align-items: center;
+    position: absolute;
+    top: 6%; /* Adjust the top position as needed */
+    bottom: 40px; /* Set to the height of .bottom-bar to prevent it from overlapping */
+    left: 0;
+    right: 0;
+    overflow-y: auto; /* Enable vertical scrolling */
+    color: white;
+    font-family: cabin-normal;
+    font-size: medium;
+    padding: 10px; /* Optional: Add padding for content */
+    display: block;
+        
+    
+    /* WebKit-based browsers (Chrome, Safari, Edge) */
+    &::-webkit-scrollbar {
+        width: 10px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: #cfb5f6; /* Color of the thumb */
+        border-radius: 7.5px; /* Roundness of the thumb */
+    }
+
+    &::-webkit-scrollbar-track {
+        background-color: transparent; /* Color of the track */
+        border-radius: 10px; /* Roundness of the track */
+    }
+  }
+
+  /* CSS */
+.options-page,
+.timer-settings-page {
+    opacity: 1;
+    transition: opacity 0.5s ease;
+}
+
+.hidden {
+    opacity: 0;
+}
+
+.pomodoro-text, .short-break-text, .long-break-text,.round-number-text{
+    opacity: 0.75;
+}
+
+
+.slider-container {
+    width: 300px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+
+
+input[type="range"] {
+    /* removing default appearance */
+    background-color: transparent;
+    -webkit-appearance: none;
+    appearance: none;
+    /* creating a custom design */
+    width: 100%;
+    cursor: pointer;
+    outline: none;
+  }
+
+/* Track: webkit browsers */
+input[type="range"]::-webkit-slider-runnable-track {
+    height: 7.5px;
+    background: #fff;
+    border-radius: 9px;
+  }
+  
+  /* Thumb: webkit */
+input[type="range"]::-webkit-slider-thumb {
+    /* removing default appearance */
+    -webkit-appearance: none;
+    appearance: none;
+    /* creating a custom design */
+    height: 15px;
+    width: 15px;
+    background-color: #d4bdf7;
+    border-radius: 50%;
+    border: 10px solid #caadf5;
+    margin-top: -6px; /* Adjusted margin to center vertically */
+  }
+
+
+#PomodoroSliderValue, #ShortBreakSliderValue, #LongBreakSliderValue, #RoundNumberSliderValue{
+    display: inline-block;
+    width: auto;
+    align-items: center;
+    text-align: center;
+    border-radius: 15px;
+    border-style: solid;
+    border-width: 2px;
+    top: auto;
+    margin: -7.5px auto 0; /* Center horizontally and move it up by 5px */
+    padding: 2.5px 10px; /* Adjust padding as needed */
+    background-color: #caadf5;
+}
+
+.pomodoro-slider-value{
+    text-align: center;
+}
+
+.short-break-timer-container,.long-break-timer-container, .round-number-container{
+    text-align: center;
+}

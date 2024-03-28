@@ -556,7 +556,7 @@ function createConfigFileIfNotExists() {
             timerSettings: {
                 timerDuration: 25, 
                 shortBreakDuration: 5, 
-                longBreakDuration: 15, 
+                longBreakDuration: 30, 
                 roundNumber: 4 
             },
             mainSettings: {

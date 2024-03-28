@@ -72,6 +72,10 @@ function updateTimerDisplay() {
     timerDisplay.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
 }
 
+function updateRoundsDisplay(roundsInASet) {
+    roundNumberText.textContent = `${roundNumber}/${roundsInASet} (${totalRounds})`;
+}
+
 
 function whichBreakisIt(){
     fs.readFile(configPath, 'utf8', (err, data) => {
@@ -183,38 +187,6 @@ function toggleTimer() {
     setTimeout(() => {
         isCooldown = false;
     }, cooldownDuration);
-}
-
-let workRan = false;
-let timerEndTimestamp;
-
-
-
-function startWorkTimer(){
-    clearInterval(timerInterval);
-    if(!workRan){
-        const timerDuration = workDuration;
-        secondsLeft = timerDuration * 60;
-        workRan = true;
-        playWorkAudio();
-    }
-
-
-    updateTimerDisplay();
-    timerInterval = setInterval(() => {
-        secondsLeft--;
-
-        if (secondsLeft < 1490) {
-            clearInterval(timerInterval);
-            roundNumber++;
-            totalRounds++;
-            console.log(roundNumber,totalRounds)
-            workRan = false
-            whichBreakisIt();
-        } else {
-            updateTimerDisplay();
-        }
-    }, 1000);
 }
 
 
@@ -476,6 +448,50 @@ function startWorkTimer(){
     const roundNumberText = document.getElementById("round-number");
     
 
+    let workRan = false;
+let timerEndTimestamp;
+
+
+
+function startWorkTimer(){
+    clearInterval(timerInterval);
+    if(!workRan){
+        fs.readFile(configPath, 'utf8', (err, data) => {        
+            try {
+                const config = JSON.parse(data);
+                workDuration = config.timerSettings.timerDuration;
+                roundsInASet = config.timerSettings.roundNumber;
+            } catch (parseError) {
+                console.error('Error parsing config JSON:', parseError);
+            }
+        });
+        
+        const timerDuration = workDuration;
+        secondsLeft = timerDuration * 60;
+        workRan = true;
+        playWorkAudio();
+    }
+
+
+    updateTimerDisplay();
+    timerInterval = setInterval(() => {
+        secondsLeft--;
+
+        if (secondsLeft < 1490) {
+            clearInterval(timerInterval);
+            roundNumber++;
+            totalRounds++;
+            console.log(roundNumber,totalRounds)
+            workRan = false
+            whichBreakisIt();
+        } else {
+            updateTimerDisplay();
+        }
+    }, 1000);
+}
+
+
+
     
     
     
@@ -488,6 +504,15 @@ function startWorkTimer(){
         state = "playing";
     
         if(!ShortBreakRan){
+            fs.readFile(configPath, 'utf8', (err, data) => {
+                try {
+                    const config = JSON.parse(data);
+                    shortBreakDuration = config.timerSettings.shortBreakDuration;
+                    roundsInASet = config.timerSettings.roundNumber;
+                } catch (parseError) {
+                    console.error('Error parsing config JSON:', parseError);
+                }
+            });
             const timerDuration = shortBreakDuration;
             secondsLeft = timerDuration * 60;
             playShortBreakAudio();
@@ -527,6 +552,15 @@ function startWorkTimer(){
         state = "playing";
     
         if(!longBreakRan){
+            fs.readFile(configPath, 'utf8', (err, data) => {
+                try {
+                    const config = JSON.parse(data);
+                    longBreakDuration = config.timerSettings.longBreakDuration;
+                    roundsInASet = config.timerSettings.roundNumber;
+                } catch (parseError) {
+                    console.error('Error parsing config JSON:', parseError);
+                }
+            });
             const timerDuration = longBreakDuration;
             secondsLeft = timerDuration * 60;
             longBreakRan = true
@@ -573,10 +607,12 @@ function startWorkTimer(){
             try {
                 const config = JSON.parse(data);
                 const timerDuration = config.timerSettings.timerDuration;
+                roundsInASet = config.timerSettings.roundNumber;
                 secondsLeft = timerDuration * 60;
                 console.log(secondsLeft);
     
                 updateTimerDisplay();
+                updateRoundsDisplay(roundsInASet);
                 updateSpotifyInfo();
                 spotifyEnabled();
             } catch (parseError) {
@@ -690,4 +726,22 @@ async function updateDiscordRPC(secondsLeft){
         return;
     }
 
+}
+
+function resetTimer(){
+     roundNumber = 1;
+     totalRounds = 0;
+    roundNumberText.textContent = `${roundNumber}/${roundsInASet} (${totalRounds})`;
+    clearInterval(timerInterval)
+    workRan = false;
+    ShortBreakRan = false;
+    longBreakRan = false;
+    isWork = true;
+    isShortBreak = false;
+    isLongBreak = false;
+    pomodoroIndicator.style.backgroundColor = '#c5aaf9';
+    longBreakIndicator.style.backgroundColor = 'transparent';
+    shortBreakIndicator.style.backgroundColor = 'transparent';
+    state = "default";
+    toggleTimer();
 }
