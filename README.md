@@ -21,7 +21,6 @@ install it by downloading the pomoapp-win.zip on the right, under [releases](htt
 
     
 ## Screenshots
-![Minecraft Theme](https://i.ibb.co/vzxryXM/image-2024-05-16-232718562.png =250x)
-![Purple Sky Theme](https://i.ibb.co/qm97qjN/image-2024-05-16-235257954.png =250x)
 
-
+<img src="https://i.ibb.co/vzxryXM/image-2024-05-16-232718562.png" width="300"></img>
+<img src="https://i.ibb.co/qm97qjN/image-2024-05-16-235257954.png5" width="300"></img>
