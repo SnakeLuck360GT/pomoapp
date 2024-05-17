@@ -22,5 +22,5 @@ install it by downloading the pomoapp-win.zip on the right, under [releases](htt
     
 ## Screenshots
 
-<img src="https://i.ibb.co/vzxryXM/image-2024-05-16-232718562.png" width="500"></img>
-<img src="https://i.ibb.co/qm97qjN/image-2024-05-16-235257954.png5" width="500"></img>
+<img src="https://i.ibb.co/vzxryXM/image-2024-05-16-232718562.png" width="400"></img>
+<img src="https://i.ibb.co/qm97qjN/image-2024-05-16-235257954.png5" width="400"></img>
