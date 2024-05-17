@@ -2,6 +2,8 @@
 # PomoApp
 <img src="https://i.ibb.co/vzxryXM/image-2024-05-16-232718562.png" width="400"></img>
 <img src="https://i.ibb.co/qm97qjN/image-2024-05-16-235257954.png5" width="400"></img>
+
+
 Aesthetic Pomodoro Timer with Spotify and Discord Rich Presence Integration
 # Features
 - Timer Functions (Pause, Skip Timer)
