@@ -1,6 +1,6 @@
 
 # PomoApp
-<img src="https://imgur.com/a/jP4FBl7" width="400"></img>
+<img src="https://i.imgur.com/JwTRKLu.png" width="400"></img>
 <img src="https://i.ibb.co/qm97qjN/image-2024-05-16-235257954.png5" width="400"></img>
 
 
